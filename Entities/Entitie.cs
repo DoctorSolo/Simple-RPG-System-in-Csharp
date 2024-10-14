@@ -3,49 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RPG_system.Entities.Entitie
+namespace RPG_system.Entities
 {
     public abstract class Entitie
     {
-        public int Life { get; set; }
-        public int PhisicalDamage { get; set; }
-        public int PhisicalDefense { get; set; }
-        public int MovSpeed { get; set; }
-        public int AttSpeed { get; set; }
-        public int Strenght { get; set; }
-        public int Weight { get; set; }
-        public int Histamine { get; set; }
+        public ushort Life      { get; }
+        public ushort MovSpeed  { get; }
+        public ushort AttSpeed  { get; }
+        public ushort Strenght  { get; }
+        public decimal Weight   { get; }
+        public ushort Histamine { get; }
 
-        public int MagicProficience { get; set; }
-        public int Inventor { get; set; }
-        public int MagicalDamage{ get; set; }
-        public int MagicalDefense { get; set; }
-        public int Mana { get; set; }
- 
-        public Entitie(int Weight, int Life=100, int MovSpeed=1, int AttSpeed=1, int Histamine=10, int Strenght=5, int Inventor=5, int MagicProficience=0, int MagicDefense=0, int Mana=0)
+        public ushort PhisicalDamage    { get -> PhisicalDamage + (AttSpeed * Strenght); }
+        public ushort PhisicalDefense   { get -> (PhisicalDefense * (Weight / 10)); }
+
+        public ushort MagicProficience  { get; }
+        public ushort Inventor          { get; }
+        public ushort Mana              { get; }
+
+        public ushort MagicalDamage     { get -> (MagicalDamage + MagicProficience * (Inventor / 10)); }
+        public ushort MagicalDefense    { get -> (MagicalDefense + MagicProficience * (Inventor / 10)); }
+
+        public Entitie(ushort Life, ushort MovSpeed, ushort AttSpeed, ushort Strenght, decimal Weight, ushort Histamine,
+            ushort PhisicalDamage, ushort PhisicalDefense, ushort MagicProficience, ushort Inventor, ushort Mana, 
+            ushort MagicalDamage, ushort MagicalDefense)
         {
-            this.Weight = Weight;
-            this.Life = Life;
-            this.MovSpeed = MovSpeed;
-            this.AttSpeed = AttSpeed;
-            this.Histamine = Histamine;
-            this.Strenght = Strenght;
-            this.MagicalDamage = (this.MagicProficience * this.Inventor);
-            this.MagicalDefense = (MagicDefense * this.Inventor);
-            this.Mana = Mana;
-            this.PhisicalDamage = (Strenght * AttSpeed);
-            this.PhisicalDefense = 1 + (Weight/10);
-        }
-        public Entitie(int Weight, int Life=100, int MovSpeed=1, int AttSpeed=1, int Histamine=10, int Strenght=5, int Inventor=5)
-        {
-            this.Weight = Weight;
-            this.Life = Life;
-            this.MovSpeed = MovSpeed;
-            this.AttSpeed = AttSpeed;
-            this.Histamine = Histamine;
-            this.Strenght = Strenght;
-            this.PhisicalDamage = (Strenght * AttSpeed);
-            this.PhisicalDefense = 1 + (Weight/10);
+            this.Life               = Life;
+            this.MovSpeed           = MovSpeed;
+            this.AttSpeed           = AttSpeed;
+            this.Strenght           = Strenght;
+            this.Weight             = Weight;
+            this.Histamine          = Histamine;
+            this.PhisicalDamage     = PhisicalDamage;
+            this.PhisicalDefense    = PhisicalDefense;
+            this.MagicProficience   = MagicProficience;
+            this.Inventor           = Inventor;
+            this.Mana               = Mana;
+            this.MagicalDamage      = MagicalDamage;
+            this.MagicalDefense     = MagicalDefense;
         }
 
         public void Show()
