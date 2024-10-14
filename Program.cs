@@ -1,10 +1,6 @@
-﻿using RPG_system.Entities.Entitie;
-using RPG_system.Models;
-using RPG_system.Models.Class;
-using RPG_system.Models.Races;
+﻿using RPG_system.Entities;
 
 
-Entitie MidSun = new FallCry();
-new Wizard(MidSun);
+Entitie Alice = new Warrior();
 
-MidSun.Show();
+Alice.Show();
