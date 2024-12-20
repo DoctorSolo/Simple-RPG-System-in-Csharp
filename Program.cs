@@ -1,5 +1,4 @@
-﻿using RPG_system.Entities;
-using RPG_system.Entities.EntitieCreationAtribute;
+﻿using RPG_system.Entities.EntitieCreationAtribute;
 
 //Races.Human Alice = new Races.Human(60, 0);
 //new Clase().Warrior(Alice);
