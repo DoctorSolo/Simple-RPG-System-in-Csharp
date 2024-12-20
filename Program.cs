@@ -1,7 +1,7 @@
 ﻿using RPG_system.Entities.EntitieCreationAtribute;
 
 
-EntitieCreationAtribute Alice = new EntitieCreationAtribute(60.00M, 100, 80, 10, 5, 40, 10, 10, 60, 0.8M, 10, 30, 10, 10);
+EntitieCreationAtribute Alice = new EntitieCreationAtribute(60.00M, 150, 80, 10, 5, 40, 10, 10, 60, 0.8M, 10, 30, 10, 10);
 
 Alice.ShowConsoleAtributes();
 
