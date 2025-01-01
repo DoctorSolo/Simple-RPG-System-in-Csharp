@@ -1,5 +1,4 @@
-﻿
-namespace RPG_system.Entities.EntitieCreationAtribute
+﻿namespace RPG_system.EntitieCreationAtribute
 {
 
     /*
@@ -15,16 +14,16 @@ namespace RPG_system.Entities.EntitieCreationAtribute
     */
 
 
-    internal class EntitieCreationAtribute
+    public class EntitieCreationAtribute
     {
         #region Main Variables
 
         // This is all atributes name on RPG
-        private string[] _atributesName = ["Level", "Weight", "Life", "Histamine", "Mana", "Inventor", "Phisical Defense", "Phisical Damage", 
+        public static string[] _atributesName = ["Level", "Weight", "Life", "Histamine", "Mana", "Inventor", "Phisical Defense", "Phisical Damage", 
             "Magical Damage", "Magical Defense", "Att Speed", "Strenght", "Critical Chance", "Critical Damage", "Mov Speed", "Magic Proficience", "Magical Att"];
         
         // Here are layout name of atributes values
-        private string[] _infoAtributes = ["Total Value", "Bonus", "Base Value", "For Level"];
+        public static string[] _infoAtributes = ["Total Value", "Bonus", "Base Value", "For Level"];
 
         // All variables used in atributes
         private string _nameLevel => _atributesName[0];
@@ -57,8 +56,8 @@ namespace RPG_system.Entities.EntitieCreationAtribute
         private double _bonusLevel => 1.1;
 
         // Dictionary Instance ////////////////////////////
-        private int _level = 0;
-        private Dictionary<string, Dictionary<string, decimal>> Atributes = new Dictionary<string, Dictionary<string, decimal>>();
+        public int _level = 0;
+        public Dictionary<string, Dictionary<string, decimal>> Atributes = new Dictionary<string, Dictionary<string, decimal>>();
         
         #endregion
 
@@ -222,7 +221,7 @@ namespace RPG_system.Entities.EntitieCreationAtribute
         // Show dictionary
         {
             Console.WriteLine("\n");
-
+            
             foreach(string atribute in Atributes.Keys.ToList())
             {
                 Console.WriteLine($"{atribute}:");
@@ -237,5 +236,15 @@ namespace RPG_system.Entities.EntitieCreationAtribute
 
         }
 
+
+        public void ClassForEntitie(decimal[] Atribute)
+        // Here is the system class
+        {
+            for (byte i = 0; i < _atributesName.Length; i++)
+            {
+                Atributes[_atributesName[i]][_InfoNameBonus] *= Atribute[i];
+            }
+            CalculateAtribute();
+        }
     }
 }
