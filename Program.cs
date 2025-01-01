@@ -1,7 +1,9 @@
-﻿using RPG_system.EntitieCreationAtribute;
+﻿using RPG_system.Entitie.Races;
 using RPG_system.Entitie.ClassSystem;
+using RPG_system.EntitieCreationAtribute;
 
-EntitieCreationAtribute Alice = new EntitieCreationAtribute(60.00M, 130, 80, 10, 5, 40, 10, 10, 60, 0.8M, 10, 30, 10, 10);
+
+EntitieCreationAtribute Alice = new Race().GetHuman(60.00M);
 
 Alice.ShowConsoleAtributes();
 
