@@ -16,39 +16,41 @@
 
     public class EntitieCreationAtribute
     {
-        #region Main Variables
+		#region Main Variables
+		// This is a name for creature
+		public string _cretureName { get; }
 
-        // This is all atributes name on RPG
-        public static string[] _atributesName = ["Level", "Weight", "Life", "Histamine", "Mana", "Inventor", "Phisical Defense", "Phisical Damage", 
+		// This is all atributes name on RPG
+		public static string[] _atributesName = [ "Level", "Weight", "Life", "Histamine", "Mana", "Inventor", "Phisical Defense", "Phisical Damage", 
             "Magical Damage", "Magical Defense", "Att Speed", "Strenght", "Critical Chance", "Critical Damage", "Mov Speed", "Magic Proficience", "Magical Att"];
         
         // Here are layout name of atributes values
         public static string[] _infoAtributes = ["Total Value", "Bonus", "Base Value", "For Level"];
 
         // All variables used in atributes
-        private string _nameLevel => _atributesName[0];
-        private string _nameWeight => _atributesName[1];
-        private string _nameLife => _atributesName[2];
-        private string _nameHistamine => _atributesName[3];
-        private string _nameMana => _atributesName[4];
-        private string _nameInventor => _atributesName[5];
-        private string _namePhisicalDe => _atributesName[6];
-        private string _namePhisicalDa => _atributesName[7];
-        private string _nameMagicalDa => _atributesName[8];
-        private string _nameMagicalDe => _atributesName[9];
-        private string _nameAttSpeed => _atributesName[10];
-        private string _nameStrenght => _atributesName[11];
-        private string _nameCriticalChance => _atributesName[12];
-        private string _nameCriticalDa => _atributesName[13];
-        private string _nameMovSpeed => _atributesName[14];
-        private string _nameMagicP => _atributesName[15];
-        private string _nameMagicalAtt => _atributesName[16];
+        public static string _nameLevel =>          _atributesName[0];
+		public static string _nameWeight =>         _atributesName[1];
+		public static string _nameLife =>           _atributesName[2];
+		public static string _nameHistamine =>      _atributesName[3];
+		public static string _nameMana =>           _atributesName[4];
+		public static string _nameInventor =>       _atributesName[5];
+		public static string _namePhisicalDe =>     _atributesName[6];
+		public static string _namePhisicalDa =>     _atributesName[7];
+		public static string _nameMagicalDa =>      _atributesName[8];
+		public static string _nameMagicalDe =>      _atributesName[9];
+		public static string _nameAttSpeed =>       _atributesName[10];
+		public static string _nameStrenght =>       _atributesName[11];
+		public static string _nameCriticalChance => _atributesName[12];
+		public static string _nameCriticalDa =>     _atributesName[13];
+		public static string _nameMovSpeed =>       _atributesName[14];
+		public static string _nameMagicP =>         _atributesName[15];
+		public static string _nameMagicalAtt =>     _atributesName[16];
 
-        // All variables used in layout
-        private string _InfoNameTotalValue => _infoAtributes[0];
-        private string _InfoNameBonus => _infoAtributes[1];
-        private string _infoNameBaseValue => _infoAtributes[2];
-        private string _InfoNameForLevel => _infoAtributes[3];
+		// All variables used in layout
+		public static string _InfoNameTotalValue => _infoAtributes[0];
+		public static string _InfoNameBonus =>      _infoAtributes[1];
+		public static string _infoNameBaseValue =>  _infoAtributes[2];
+		public static string _InfoNameForLevel =>   _infoAtributes[3];
 
         // VALUE BUFF/DEBUFF
         private double _debuff => 1.1;
@@ -57,7 +59,7 @@
 
         // Dictionary Instance ////////////////////////////
         public int _level = 0;
-        public Dictionary<string, Dictionary<string, decimal>> Atributes = new Dictionary<string, Dictionary<string, decimal>>();
+        public Dictionary<string, Dictionary<string, decimal>>? Atributes = new Dictionary<string, Dictionary<string, decimal>>();
         
         #endregion
 
@@ -84,13 +86,16 @@
 
 
         // ADD ALL VALUE IN ATRIBUTES...
-        public EntitieCreationAtribute(decimal Weight, decimal Life, decimal Histamine, decimal Mana, decimal Inventor,
+        public EntitieCreationAtribute(string Name, decimal Weight, decimal Life, decimal Histamine, decimal Mana, decimal Inventor,
            decimal PhisicalDefense, decimal MagicalDefense, decimal AttSpeed, decimal Strenght, decimal CriticalChance, 
            decimal CriticalDamage, decimal MovSpeed, decimal MagicProficience, decimal MagicalAttk)
         {
             MakeAtributes();
 
-			// Attributes...
+            // Creature Name...
+            _cretureName = Name;
+
+            // Attributes...
 			Atributes[_nameLevel]           [_infoNameBaseValue] = _level;
 			Atributes[_nameWeight]          [_infoNameBaseValue] = Weight;
 			Atributes[_nameLife]            [_infoNameBaseValue] = Life;
@@ -220,7 +225,7 @@
         public void ShowConsoleAtributes()
         // Show dictionary
         {
-            Console.WriteLine("\n");
+            Console.WriteLine($"\n{_cretureName}");
             
             foreach(string atribute in Atributes.Keys.ToList())
             {
@@ -246,5 +251,44 @@
             }
             CalculateAtribute();
         }
-    }
+
+
+        public EntitieCreationAtribute ReceiveDamage(EntitieCreationAtribute Mobx)
+		{
+            decimal _histamineComption = (Atributes[_namePhisicalDe][_InfoNameTotalValue] + Atributes[_nameLife][_InfoNameTotalValue])/
+                Mobx.Atributes[_namePhisicalDa][_InfoNameTotalValue];
+			decimal _manaComption = (Atributes[_nameMagicalDe][_InfoNameTotalValue] + Atributes[_nameLife][_InfoNameTotalValue]) /
+				Mobx.Atributes[_nameMagicalDa][_InfoNameTotalValue];
+
+			if (Atributes[_namePhisicalDe][_InfoNameTotalValue] < Mobx.Atributes[_namePhisicalDa][_InfoNameTotalValue] &&
+				Mobx.Atributes[_nameHistamine][_InfoNameTotalValue] >= _histamineComption)
+			{
+			    Atributes[_nameLife][_InfoNameTotalValue] -= 
+                    (Mobx.Atributes[_namePhisicalDa][_InfoNameTotalValue] - Atributes[_namePhisicalDe][_InfoNameTotalValue]);
+
+				Mobx.Atributes[_nameHistamine][_InfoNameTotalValue] -=
+				(Atributes[_namePhisicalDe][_InfoNameTotalValue] * 0.1M);
+			}
+
+            if (Atributes[_nameMagicalDe][_InfoNameTotalValue] < Mobx.Atributes[_nameMagicalDa][_InfoNameTotalValue] &&
+                Mobx.Atributes[_nameMana][_InfoNameTotalValue] >= _manaComption)
+            {
+				Atributes[_nameLife][_InfoNameTotalValue] -=
+					(Mobx.Atributes[_nameMagicalDa][_InfoNameTotalValue] - Atributes[_nameMagicalDe][_InfoNameTotalValue]);
+			}
+
+			if (Atributes[_nameLife][_InfoNameTotalValue] <= 0)
+			{
+				Atributes = null;
+			}
+
+            return Mobx;
+		}
+
+
+        private void NoAtributes()
+        {
+            if (Atributes == null) throw new ArgumentException("Entitie does't exist");
+        }
+	}
 }
