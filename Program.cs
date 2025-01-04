@@ -1,16 +1,8 @@
-﻿using RPG_system.Entitie.Races;
-using RPG_system.Entitie.ClassSystem;
-using RPG_system.EntitieCreationAtribute;
+﻿using RPG_system.World;
+using RPG_system.Layout;
 
+Layout.ChoiseYourPlayer();
 
-EntitieCreationAtribute Alice = new Race().GetHuman("Alice", 60.00M);
-EntitieCreationAtribute Ciber = new Race().GetHuman("Ciber", 40.00M);
+GameWorld W = new GameWorld();
 
-Alice.ClassForEntitie(ClassSystem.Warrior);
-Ciber.ClassForEntitie(ClassSystem.Assassin);
-
-
-Alice = Ciber.ReceiveDamage(Alice);
-
-Alice.ShowConsoleAtributes();
-Ciber.ShowConsoleAtributes();
+W.ShowEntities();

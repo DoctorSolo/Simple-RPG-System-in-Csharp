@@ -1,9 +1,4 @@
-﻿using static System.Net.Mime.MediaTypeNames;
-using System.Reflection.Emit;
-using System.Reflection.PortableExecutable;
-using System.Threading.Channels;
-
-namespace RPG_system.Entitie.ClassSystem
+﻿namespace RPG_system.Entitie.ClassSystem
 {
 	/*
 	 * @DOCTOR SOLO
@@ -13,7 +8,7 @@ namespace RPG_system.Entitie.ClassSystem
 	 * 
 	 * All list will be RPG class only.
 	 */
-	public class ClassSystem
+	internal class ClassSystem
 	{
 		/* 
 		 * Correct order: 

@@ -1,7 +1,6 @@
 ﻿namespace RPG_system.EntitieCreationAtribute
 {
-
-    /*
+	/*
      *  @DOCTOR SOLO
      *
      *  This code will work with a dictionary with, base value (it's a initial value of atributes), 
@@ -13,12 +12,15 @@
      *  The level increases all atributes.
     */
 
+	using RPG_system.World;
 
-    public class EntitieCreationAtribute
+
+	internal class EntitieCreationAtribute
     {
 		#region Main Variables
 		// This is a name for creature
 		public string _cretureName { get; }
+        public decimal _id { get; }
 
 		// This is all atributes name on RPG
 		public static string[] _atributesName = [ "Level", "Weight", "Life", "Histamine", "Mana", "Inventor", "Phisical Defense", "Phisical Damage", 
@@ -59,7 +61,7 @@
 
         // Dictionary Instance ////////////////////////////
         public int _level = 0;
-        public Dictionary<string, Dictionary<string, decimal>>? Atributes = new Dictionary<string, Dictionary<string, decimal>>();
+        public Dictionary<string, Dictionary<string, decimal>> Atributes = new Dictionary<string, Dictionary<string, decimal>>();
         
         #endregion
 
@@ -75,7 +77,7 @@
 		{
 			if (i < _atributesName.Length)
             {
-                Atributes[_atributesName[i]] = new Dictionary<string, decimal>();
+				Atributes[_atributesName[i]] = new Dictionary<string, decimal>();
                 Atributes[_atributesName[i]][_InfoNameTotalValue] = new decimal();
                 Atributes[_atributesName[i]][_InfoNameBonus] = new decimal();
                 Atributes[_atributesName[i]][_infoNameBaseValue] = new decimal();
@@ -86,14 +88,15 @@
 
 
         // ADD ALL VALUE IN ATRIBUTES...
-        public EntitieCreationAtribute(string Name, decimal Weight, decimal Life, decimal Histamine, decimal Mana, decimal Inventor,
+        public EntitieCreationAtribute(decimal id, string Name, decimal Weight, decimal Life, decimal Histamine, decimal Mana, decimal Inventor,
            decimal PhisicalDefense, decimal MagicalDefense, decimal AttSpeed, decimal Strenght, decimal CriticalChance, 
            decimal CriticalDamage, decimal MovSpeed, decimal MagicProficience, decimal MagicalAttk)
         {
             MakeAtributes();
 
-            // Creature Name...
+            // Creature Name and ID...
             _cretureName = Name;
+            _id = id;
 
             // Attributes...
 			Atributes[_nameLevel]           [_infoNameBaseValue] = _level;
@@ -277,18 +280,10 @@
 					(Mobx.Atributes[_nameMagicalDa][_InfoNameTotalValue] - Atributes[_nameMagicalDe][_InfoNameTotalValue]);
 			}
 
-			if (Atributes[_nameLife][_InfoNameTotalValue] <= 0)
-			{
-				Atributes = null;
-			}
+            if (Atributes[_nameLife][_InfoNameTotalValue] <= 0) GameWorld.EntitieIsDie(_id);
+
 
             return Mobx;
 		}
-
-
-        private void NoAtributes()
-        {
-            if (Atributes == null) throw new ArgumentException("Entitie does't exist");
-        }
 	}
 }
