@@ -175,7 +175,8 @@
         public void NextLevel(byte level=1)
         // This method update all atributes for level
         {
-            Atributes[Idioma._nameLevel][Idioma._InfoNameTotalValue] += level;
+            _level += level;
+            Atributes[Idioma._nameLevel][Idioma._InfoNameTotalValue] = level;
             CalculateAtribute();
         }
 

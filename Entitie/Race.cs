@@ -10,7 +10,7 @@
 	 */
 
 
-	internal class Race
+	internal static class Race
 	{
 
 		public static EntitieCreationAtribute ChoiseRace(byte choise, decimal id, string name, decimal weight)
