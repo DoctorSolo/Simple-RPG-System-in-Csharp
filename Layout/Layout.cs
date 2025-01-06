@@ -3,48 +3,29 @@
 	using RPG_system.EntitieCreationAtribute;
 	using RPG_system.Entitie.Races;
 	using RPG_system.World;
+	using RPG_system.Translator;
+	using RPG_system.Layout;
 	using System.Xml.Linq;
 
 	internal class Layout
 	{
-		public static string[] _indiomaLayout = ["Enter your name: ", "WELCOME to the game ", "\nPRESS 'Z' TO CONTINUE", "Choise your race: ", "0. Human"];
-		private static string _indYourName = _indiomaLayout[0];
-		private static string _welcomeMessage = _indiomaLayout[1];
-		private static string _pressZText = _indiomaLayout[2];
-		private static string _choiseYourRaceT = _indiomaLayout[3];
-		private static string _choiseYourRaceHumanT = _indiomaLayout[4];
-
-
-		private static string? Name;
-
-		private static void EnterYourName()
-		{
-			Console.BackgroundColor = ConsoleColor.Cyan;
-
-			Console.Clear();
-			Console.ForegroundColor = ConsoleColor.Green;
-			Console.Write(_indYourName);
-			Name = Console.ReadLine();
-			Console.Clear();
-			Console.Write(_welcomeMessage);
-			Console.ForegroundColor = ConsoleColor.Red;
-			Console.Write($"{Name}\n");
-
-			PressZtoContinue();
-		}
+		private static string Name;
 
 
 		public static void ChoiseYourPlayer()
+		// MAIN HERE		
 		{
+
 			EnterYourName();
 
 			ChoiseYourRace();
 		}
 
+
 		private static void PressZtoContinue()
 		{
 			Console.ForegroundColor = ConsoleColor.DarkRed;
-			Console.WriteLine(_pressZText);
+			Console.WriteLine(Idioma._pressZText);
 			
 			ConsoleKeyInfo key;
 			do
@@ -56,27 +37,21 @@
 		}
 
 
+		private static void EnterYourName()
+		{
+			DisplayBox.Box(Idioma._indYourName, ConsoleColor.Green, ConsoleColor.Magenta, true, false);
+			Name = DisplayBox.TextRead;
+
+			DisplayBox.Box(Idioma._welcomeMessage, ConsoleColor.Green, ConsoleColor.DarkYellow, false, false, ConsoleColor.Black, Name, null, ConsoleColor.Blue);
+			PressZtoContinue();
+		}
+
+
 		private static void ChoiseYourRace()
 		{
-			Console.ForegroundColor = ConsoleColor.Green;
-			Console.WriteLine(_choiseYourRaceT);
-			Console.ForegroundColor = ConsoleColor.DarkGreen;
-			Console.WriteLine(_choiseYourRaceHumanT);
-
-			ConsoleKeyInfo key;
-			byte number;
-
-			do
-			{
-				key = Console.ReadKey(true);
-				number = (byte)char.GetNumericValue(key.KeyChar);
-
-			}
-			while(number != 0);
-
-			GameWorld.Entities.Add(00, new Race().ChoiseRace(number, 00, Name, 60.00M));
-
-			Console.Clear();
+			DisplayBox.Box(Idioma._choiseYourRaceT, ConsoleColor.Green, ConsoleColor.Green, false, true, ConsoleColor.Black, "", Idioma._indChoiseRace);
+			GameWorld.Entities.Add(00, new Race().ChoiseRace((byte)DisplayBox.ChoiseRead, 00, Name, 60.00M));
+			PressZtoContinue();
 		}
 	
 	}

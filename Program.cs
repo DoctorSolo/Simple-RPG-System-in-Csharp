@@ -1,8 +1,6 @@
 ﻿using RPG_system.World;
 using RPG_system.Layout;
+using RPG_system.Translator;
 
-Layout.ChoiseYourPlayer();
 
-GameWorld W = new GameWorld();
-
-W.ShowEntities();
+Menu.InterfacePlay();

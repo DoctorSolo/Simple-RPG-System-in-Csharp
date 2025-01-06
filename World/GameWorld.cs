@@ -31,9 +31,7 @@
 		private void Mobs()
 		{
 			decimal xID = IDGenerator();
-			decimal yID = IDGenerator();
-			Entities.Add(xID, new Race().ChoiseRace(0, xID, "Alice", 60.00M));
-			Entities.Add(yID, new Race().ChoiseRace(0, yID, "Cyber", 40.00M));
+			Entities.Add(xID, new Race().ChoiseRace(1, xID, "Ogro", 150.00M));
 		}
 
 

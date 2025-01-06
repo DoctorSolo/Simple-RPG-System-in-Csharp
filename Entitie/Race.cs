@@ -9,7 +9,10 @@
 			switch(choise)
 			{
 				default: // Human
-					return new EntitieCreationAtribute(id, name, weight, 50, 50, 50, 40, 20, 20, 20, 20, 5, 5, 10, 10, 20);
+					return new EntitieCreationAtribute(id, name, weight, 050, 050, 050, 040, 020, 020, 020, 020, 005, 005, 010, 010, 020);
+
+				case 1: // Ogro
+					return new EntitieCreationAtribute(id, name, weight, 100, 100, 005, 005, 050, 010, 010, 050, 010, 010, 005, 005, 005);
 			}
 		}
 	}
