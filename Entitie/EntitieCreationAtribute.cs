@@ -18,31 +18,31 @@
 
 	internal class EntitieCreationAtribute
     {
+
 		#region Main Variables
-		// This is a name for creature
-		public string _cretureName { get; }
-        public decimal _id { get; }
+		public string _cretureName { get; } // Name of the creature
+        public decimal _id { get; } // ID of the creature
 
-        // VALUE BUFF/DEBUFF
-        private double _debuff => 0.1;
-        private decimal _buff => 0.02M;
-        private double _bonusLevel => 1.1;
+		private int _level = 0; // Level of the creature
 
-        // Dictionary Instance ////////////////////////////
-        public int _level = 0;
+		// VALUE BUFF/DEBUFF
+		private decimal _debuff => 0.10M;
+        private decimal _buff => 1.10M;
+        private decimal _bonusLevel => 1.10M;
+
+        // Main Dictionary Instance
         public Dictionary<string, Dictionary<string, decimal>> Atributes = new Dictionary<string, Dictionary<string, decimal>>();
-        
-        #endregion
+		#endregion
 
 
-        private void MakeAtributes(byte i=0)
-		     /* 
-			  * CREATING ATRIBUTE METHOD
-			  * 
-			  * 
-			  * This method need loand a extext for a internal dictionary...
-			  * 
-			  */
+		private void MakeAtributes(byte i=0)
+	    /*
+         * CREATING ATRIBUTE METHOD
+         *
+         *
+         * This method need loand a extext for a internal dictionary...
+         *
+         */
 		{
 			if (i < Idioma._atributesName.Length)
             {
@@ -61,7 +61,7 @@
            decimal PhisicalDefense, decimal MagicalDefense, decimal AttSpeed, decimal Strenght, decimal CriticalChance, 
            decimal CriticalDamage, decimal MovSpeed, decimal MagicProficience, decimal MagicalAttk)
         {
-            MakeAtributes();
+            MakeAtributes(); // Create main dictionary...
 
             // Creature Name and ID...
             _cretureName = Name;
@@ -85,22 +85,12 @@
             Atributes[Idioma._nameMagicalAtt]      [Idioma._infoNameBaseValue] = MagicalAttk;
 
             // Set all bonus in value 1, so as not be empty...
-            foreach (string atribute in Idioma._atributesName)
-                Atributes[atribute][Idioma._InfoNameBonus] = 1;
+            foreach (string atribute in Idioma._atributesName) Atributes[atribute][Idioma._InfoNameBonus] = 1;
 
             // Set Imutable attributes...
-            foreach (string atribute in Idioma._atributesName)
-            {
-                if ((atribute != Idioma._nameLevel) && (atribute != Idioma._nameWeight) && (atribute != Idioma._namePhisicalDa) && 
-                    (atribute != Idioma._nameMagicalDa))
-                {
-                    Atributes[atribute][Idioma._InfoNameForLevel] = 1;
-                }
-                else
-                {
-                    Atributes[atribute][Idioma._InfoNameForLevel] = 0;
-                }
-            }
+            foreach (string atribute in Idioma._atributesName) 
+                Atributes[atribute][Idioma._InfoNameForLevel] = ((atribute != Idioma._nameLevel) && (atribute != Idioma._nameWeight) && 
+                    (atribute != Idioma._namePhisicalDa) && (atribute != Idioma._nameMagicalDa)) ? 1 : 0;
 
             // Calculate others atributes...
             PhisicalDamageMethod(Idioma._infoNameBaseValue, _debuff);
@@ -111,47 +101,48 @@
             CalculateAtribute();
         }
 
-
-        private decimal CalculateLevel(double BonusLevel)
-        // Here all atributes increase with level...
-        {
-            return (decimal)Math.Pow(BonusLevel, _level);
-        }
-
-
 		#region CALCULATE OTHERS ATTRIBUTES
 
 
-		private decimal IncreacedAtributeDebuff(double Debuff, string Position)
-        // Here some attributes will receive debuff...
-        {
-            decimal a = Atributes[Idioma._nameAttSpeed][Position];
-            return a / (decimal)Math.Pow((double)a, Debuff);
-        }
+		private decimal CalculateLevel(decimal BonusLevel) => (decimal)Math.Pow((double)BonusLevel, _level);
+		// Here all atributes increase with level...
 
-		private void PhisicalDamageMethod(string position, double DebuffValue) =>
+
+		private decimal IncreacedAtributeDamageDebuff(decimal Debuff, string Position) =>
+		// Here some damage attributes will receive debuff...
+			Atributes[Idioma._nameAttSpeed][Position] / (decimal)Math.Pow((double)Atributes[Idioma._nameAttSpeed][Position], (double)Debuff);
+
+
+        private decimal IncreacedAtributeMagicaDamageBuff(decimal Buff, string Position) =>
+        // Here some damage attribute will receive buff...
+			(Buff - 1) * (Atributes[Idioma._nameInventor][Position] + Atributes[Idioma._nameMagicP][Position]);
+
+
+        private decimal IncreacedAtributeDefeseBuff(decimal Buff, string Position) => (Buff - 1) * Atributes[Idioma._nameWeight][Position];
+		// Here the phisical defense will receive buff for height...
+
+
+		private void PhisicalDamageMethod(string position, decimal DebuffValue) =>
 		// Here will receive debuff in phisicalDamage for velAttk...
 			Atributes[Idioma._namePhisicalDa][position] = decimal.Round(
-                Atributes[Idioma._nameStrenght][position] * IncreacedAtributeDebuff(DebuffValue, position), 2);
+                Atributes[Idioma._nameStrenght][position] * IncreacedAtributeDamageDebuff(DebuffValue, position), 2);
 
 
-        private void MagicalDamageMethod(string Position, double DebuffValue, decimal BuffValue) =>
+		private void MagicalDamageMethod(string Position, decimal DebuffValue, decimal BuffValue) =>
         // Here will receive debuff in Magical Damage for velAttk and buff in Inteligence and Proficience...
             Atributes[Idioma._nameMagicalDa][Position] = decimal.Round(
-                Atributes[Idioma._nameMagicalAtt][Position] * (Atributes[Idioma._nameAttSpeed][Position] * 
-                IncreacedAtributeDebuff(_debuff, Position)) * 
-                ((Atributes[Idioma._nameInventor][Position] + Atributes[Idioma._nameMagicP][Position]) * BuffValue), 2);
+                Atributes[Idioma._nameMagicalAtt][Position] * IncreacedAtributeDamageDebuff(_debuff, Position) *
+                IncreacedAtributeMagicaDamageBuff(BuffValue, Position), 2);
 
 
         private void PhisicalDefenseMethod(string Position, decimal BuffValue) =>
         // Here will receive buff for weight...
-            Atributes[Idioma._namePhisicalDe][Position] *= decimal.Round(Atributes[Idioma._nameWeight][Position] * BuffValue, 2);
+            Atributes[Idioma._namePhisicalDe][Position] *= decimal.Round(IncreacedAtributeDefeseBuff(BuffValue, Position), 2);
 
 
         private void MagicalDefenseMethod(string Position, decimal Buff) =>
         // Here will receive buff for inteligente and proficience
-            Atributes[Idioma._nameMagicalDe][Position] *= decimal.Round(
-                (Atributes[Idioma._nameInventor][Position] + Atributes[Idioma._nameMagicP][Position]) * Buff, 2);
+            Atributes[Idioma._nameMagicalDe][Position] *= decimal.Round(IncreacedAtributeMagicaDamageBuff(Buff, Position), 2);
 
 
         private void WeightMethod(decimal BuffOrDebuff) =>
@@ -159,22 +150,19 @@
             Atributes[Idioma._nameWeight][Idioma._InfoNameTotalValue] = decimal.Round(
                 Atributes[Idioma._nameWeight][Idioma._infoNameBaseValue] * BuffOrDebuff, 2);
 
-
 		#endregion
 
 
 		private void CalculateAtribute()
-		// This is a important method, he calculate all atributes...
+		/*
+         * This is a important method, he calculate all atributes...
+         * 
+         */
 		{
-			foreach (string atrib in Idioma._atributesName)
-            {
+			foreach (string atrib in Idioma._atributesName) 
                 if (Atributes[atrib][Idioma._InfoNameForLevel] == 1)
-                {
-                    decimal Bonus = Atributes[atrib][Idioma._InfoNameBonus];
                     Atributes[atrib][Idioma._InfoNameTotalValue] = decimal.Round(
-                        Atributes[atrib][Idioma._infoNameBaseValue] * Bonus * CalculateLevel(_bonusLevel), 2);
-                }
-            }
+                        Atributes[atrib][Idioma._infoNameBaseValue] * Atributes[atrib][Idioma._InfoNameBonus] * CalculateLevel(_bonusLevel), 2);
 
             // Calculate others atributes...
             PhisicalDamageMethod(Idioma._InfoNameTotalValue, _debuff);
@@ -187,9 +175,7 @@
         public void NextLevel(byte level=1)
         // This method update all atributes for level
         {
-            _level += level;
-            Atributes[Idioma._nameLevel][Idioma._InfoNameTotalValue] = _level;
-
+            Atributes[Idioma._nameLevel][Idioma._InfoNameTotalValue] += level;
             CalculateAtribute();
         }
 
@@ -210,12 +196,14 @@
             }
 
             Console.WriteLine("\n");
-
         }
 
 
         public void ClassForEntitie(decimal[] Atribute)
-        // Here is the system class
+        /*
+         * This method will add class to entity...
+         * 
+         */
         {
             for (byte i = 0; i < Idioma._atributesName.Length; i++)
             {
@@ -226,6 +214,10 @@
 
 
         public EntitieCreationAtribute ReceiveDamage(EntitieCreationAtribute Mobx)
+        /*
+         * This method is very important then it calculate damages, histamina and mana...
+         * 
+         */
 		{
             decimal _histamineComption = (Atributes[Idioma._namePhisicalDe][Idioma._InfoNameTotalValue] + Atributes[Idioma._nameLife][Idioma._InfoNameTotalValue])/
                 Mobx.Atributes[Idioma._namePhisicalDa][Idioma._InfoNameTotalValue];
@@ -238,8 +230,7 @@
 			    Atributes[Idioma._nameLife][Idioma._InfoNameTotalValue] -= 
                     (Mobx.Atributes[Idioma._namePhisicalDa][Idioma._InfoNameTotalValue] - Atributes[Idioma._namePhisicalDe][Idioma._InfoNameTotalValue]);
 
-				Mobx.Atributes[Idioma._nameHistamine][Idioma._InfoNameTotalValue] -=
-				(Atributes[Idioma._namePhisicalDe][Idioma._InfoNameTotalValue] * 0.1M);
+				Mobx.Atributes[Idioma._nameHistamine][Idioma._InfoNameTotalValue] -= _histamineComption;
 			}
 
             if (Atributes[Idioma._nameMagicalDe][Idioma._InfoNameTotalValue] < Mobx.Atributes[Idioma._nameMagicalDa][Idioma._InfoNameTotalValue] &&
@@ -247,6 +238,8 @@
             {
 				Atributes[Idioma._nameLife][Idioma._InfoNameTotalValue] -=
 					(Mobx.Atributes[Idioma._nameMagicalDa][Idioma._InfoNameTotalValue] - Atributes[Idioma._nameMagicalDe][Idioma._InfoNameTotalValue]);
+
+                Mobx.Atributes[Idioma._nameMana][Idioma._InfoNameTotalValue] -= _histamineComption;
 			}
 
             if (Atributes[Idioma._nameLife][Idioma._InfoNameTotalValue] <= 0) GameWorld.EntitieIsDie(_id);
@@ -254,5 +247,19 @@
 
             return Mobx;
 		}
+
+
+        public void RecoversHistamine() =>
+            Atributes[Idioma._nameHistamine][Idioma._InfoNameTotalValue] *= (Atributes[Idioma._nameHistamine][Idioma._InfoNameTotalValue] < 
+            Atributes[Idioma._nameHistamine][Idioma._infoNameBaseValue] * Atributes[Idioma._InfoNameBonus][Idioma._InfoNameTotalValue] * 
+            CalculateLevel(_bonusLevel)) ? _buff : Atributes[Idioma._nameHistamine][Idioma._infoNameBaseValue] * Atributes[Idioma._InfoNameBonus][Idioma._InfoNameTotalValue] *
+			CalculateLevel(_bonusLevel);
+
+
+        public void RecoversMana() =>
+			Atributes[Idioma._nameMana][Idioma._InfoNameTotalValue] *= (Atributes[Idioma._nameMana][Idioma._InfoNameTotalValue] <
+			Atributes[Idioma._nameMana][Idioma._infoNameBaseValue] * Atributes[Idioma._InfoNameBonus][Idioma._InfoNameTotalValue] *
+			CalculateLevel(_bonusLevel)) ? _buff : Atributes[Idioma._nameMana][Idioma._infoNameBaseValue] * Atributes[Idioma._InfoNameBonus][Idioma._InfoNameTotalValue] *
+			CalculateLevel(_bonusLevel);
 	}
 }
