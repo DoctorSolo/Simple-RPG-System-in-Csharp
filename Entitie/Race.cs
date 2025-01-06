@@ -13,7 +13,7 @@
 	internal class Race
 	{
 
-		public EntitieCreationAtribute ChoiseRace(byte choise, decimal id, string name, decimal weight)
+		public static EntitieCreationAtribute ChoiseRace(byte choise, decimal id, string name, decimal weight)
 		{
 			switch(choise)
 			{
