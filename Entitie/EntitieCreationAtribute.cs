@@ -1,4 +1,4 @@
-﻿namespace RPG_system.EntitieCreationAtribute
+﻿namespace RPG_system.Entitie
 {
 	/*
      *  @DOCTOR SOLO
