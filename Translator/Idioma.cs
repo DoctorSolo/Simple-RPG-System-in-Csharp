@@ -9,24 +9,37 @@
 	 */
 	internal static class Idioma
 	{
+		// Here is all defaut text
 		// Here for the user choose the language
-		public static string ChoiseYourLanguage;
-		public static string[] ChoiseIndioma;
+		private static string _choiseYourLanguage	= "Choise your language: ";
+		private static string[] _choiseIndioma		= ["English"];
 
 		// Here is Menu
-		public static string NameHomeMenu;
-		public static string[] Menus;
+		private static string _nameHomeMenu = "RPG System in C#";
+		private static string[] _menus		= ["Play", "Language", "Exit"];
 
 		// This is all atributes name on RPG
-		public static string[] _atributesName;
+		private static string[] atributesName = [ "Level", "Weight", "Life", "Histamine", "Mana", "Inventor", "Phisical Defense", "Phisical Damage",
+			"Magical Damage", "Magical Defense", "Att Speed", "Strenght", "Critical Chance", "Critical Damage", "Mov Speed", "Magic Proficience", 
+			"Magical Att"];
 
 		// Here are layout name of atributes values
-		public static string[] _infoAtributes;
+		private static string[] infoAtributes = ["Total Value", "Bonus", "Base Value", "For Level?"];
 
 
 		// Layout
-		public static string[] _indiomaLayout;
-		public static string[] _indChoiseRace;
+		private static string[] indiomaLayout = ["Enter your name: ", "WELCOME to the game ", "\nPRESS 'Z' TO CONTINUE", "Choise your race: "];
+		private static string[] indChoiseRace = ["Human", "Ogro", "Spectral Knight"];
+
+		// Load the text
+		public static string ChoiseYourLanguage = _choiseYourLanguage;
+		public static string[] ChoiseIndioma = _choiseIndioma;
+		public static string NameHomeMenu = _nameHomeMenu;
+		public static string[] Menus = _menus;
+		public static string[] _atributesName = atributesName;
+		public static string[] _infoAtributes = infoAtributes;
+		public static string[] _indiomaLayout = indiomaLayout;
+		public static string[] _indChoiseRace = indChoiseRace;
 
 
 		public static void SetLanguage(byte LanguageNumber=0)
@@ -34,18 +47,16 @@
 			switch(LanguageNumber)
 			{
 				default:
-					ChoiseYourLanguage	= "Choise your language: ";
-					ChoiseIndioma		= ["English", "Portuguese"];
-					NameHomeMenu		= "RPG System in C#";
-					Menus				= ["Play", "Language", "Exit"];
+					ChoiseYourLanguage = _choiseYourLanguage;
+					ChoiseIndioma = _choiseIndioma;
+					NameHomeMenu = _nameHomeMenu;
+					Menus = _menus;
 
-					_atributesName = [ "Level", "Weight", "Life", "Histamine", "Mana", "Inventor", "Phisical Defense", "Phisical Damage", 
-						"Magical Damage", "Magical Defense", "Att Speed", "Strenght", "Critical Chance", "Critical Damage", "Mov Speed", 
-						"Magic Proficience", "Magical Att"];
-					_infoAtributes = ["Total Value", "Bonus", "Base Value", "For Level?"];
+					_atributesName = atributesName;
+					_infoAtributes = infoAtributes;
 
-					_indiomaLayout = ["Enter your name: ", "WELCOME to the game ", "\nPRESS 'Z' TO CONTINUE", "Choise your race: "];
-					_indChoiseRace = ["Human", "Ogro", "Spectral Knight"];
+					_indiomaLayout = indiomaLayout;
+					_indChoiseRace = indChoiseRace;
 					break;
 
 				case 1:

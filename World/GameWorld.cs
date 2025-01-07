@@ -1,8 +1,6 @@
 ﻿namespace RPG_system.World
 {
-	using EntitieCreationAtribute;
-	using RPG_system.Entitie.Races;
-	using RPG_system.Entitie.ClassSystem;
+	using RPG_system.Entitie;
 
 	internal class GameWorld
 	{
@@ -31,7 +29,7 @@
 		private void Mobs()
 		{
 			decimal xID = IDGenerator();
-			Entities.Add(xID, new Race().ChoiseRace(1, xID, "Ogro", 150.00M));
+			Entities.Add(xID, Race.ChoiseRace(1, xID, "Ogro", 150.00M));
 		}
 
 
