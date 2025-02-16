@@ -1,16 +1,18 @@
 ﻿namespace RPG_system.Layout
 {
+	/*
+	 * @DOCTOR SOLO
+	 * 
+	 * This class create a text box...
+	 * 
+	 */
+
 	using System;
-	internal class DisplayBox
+	internal static class DisplayBox
 	{
-		private static int Heights = 0;
 
 		public static string TextRead = "";
 		public static int ChoiseRead = 0;
-
-		// Get Position
-		private static int left;
-		private static int top;
 
 
 		public static void Box(string message, ConsoleColor BorderColor, ConsoleColor TitleColor, bool NeedRead = false, 
@@ -20,10 +22,8 @@
 			// Get Measurements
 			int messageLenght = (specialMessage == "" || specialMessage == null) ? message.Length : message.Length + specialMessage.Length;
 			int BoxWidth = messageLenght + 4;
-
-			// Get Position
-			int left = (Console.WindowWidth - BoxWidth) / 2;
-			int top = (Console.WindowHeight / 2);
+			ChoiseRead = 0;
+			TextRead = "";
 
 			do
 			{

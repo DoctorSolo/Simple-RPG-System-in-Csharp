@@ -1,18 +1,30 @@
-﻿namespace RPG_system.Entitie.Races
+﻿namespace RPG_system.Entitie
 {
-	using EntitieCreationAtribute;
-	internal class Race
+	/*
+	 * @DOCTOR SOLO
+	 * 
+	 * this class will define the race of the entity...
+	 * 
+	 * 515 points must be distributed!!!
+	 * 
+	 */
+
+
+	internal static class Race
 	{
 
-		public EntitieCreationAtribute ChoiseRace(byte choise, decimal id, string name, decimal weight)
+		public static EntitieCreationAtribute ChoiseRace(byte choise, int id, string name, decimal weight)
 		{
 			switch(choise)
 			{
 				default: // Human
-					return new EntitieCreationAtribute(id, name, weight, 050, 050, 050, 040, 020, 020, 020, 020, 005, 005, 010, 010, 020);
+					return new EntitieCreationAtribute(id, name, weight, 100, 100, 100, 050, 020, 020, 020, 020, 005, 020, 020, 020, 020);
 
 				case 1: // Ogro
-					return new EntitieCreationAtribute(id, name, weight, 100, 100, 005, 005, 050, 010, 010, 050, 010, 010, 005, 005, 005);
+					return new EntitieCreationAtribute(id, name, weight, 150, 100, 005, 005, 100, 015, 010, 050, 010, 050, 010, 005, 005);
+
+				case 2: // Spectral Knight
+					return new EntitieCreationAtribute(id, name, weight, 100, 001, 100, 050, 010, 050, 025, 001, 010, 040, 030, 050, 050);
 			}
 		}
 	}
