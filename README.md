@@ -7,7 +7,5 @@
 <h6 align=right>from a random traveler...</h6>
 
 
-<details>
-	<summary>Download the exe here</summary>
-
-</details>
+## Download the exe here
+download here: [executable and add-ons](https://github.com/DoctorSolo/Simple-RPG-System-in-Csharp/blob/main/DOWLOAD%20THE%20EXE.zip)
