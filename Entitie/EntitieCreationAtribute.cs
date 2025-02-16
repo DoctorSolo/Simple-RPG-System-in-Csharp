@@ -68,21 +68,22 @@
             _id = id;
 
             // Attributes...
-			Atributes[Idioma._nameLevel]           [Idioma._infoNameBaseValue] = _level;
-			Atributes[Idioma._nameWeight]          [Idioma._infoNameBaseValue] = Weight;
-			Atributes[Idioma._nameLife]            [Idioma._infoNameBaseValue] = Life;
-            Atributes[Idioma._nameHistamine]       [Idioma._infoNameBaseValue] = Histamine;
-            Atributes[Idioma._nameMana]            [Idioma._infoNameBaseValue] = Mana;
-            Atributes[Idioma._nameInventor]        [Idioma._infoNameBaseValue] = Inventor;
-            Atributes[Idioma._namePhisicalDe]      [Idioma._infoNameBaseValue] = PhisicalDefense;
-            Atributes[Idioma._nameMagicalDe]       [Idioma._infoNameBaseValue] = MagicalDefense;
-            Atributes[Idioma._nameAttSpeed]        [Idioma._infoNameBaseValue] = AttSpeed;
-            Atributes[Idioma._nameStrenght]        [Idioma._infoNameBaseValue] = Strenght;
-            Atributes[Idioma._nameCriticalChance]  [Idioma._infoNameBaseValue] = CriticalChance;
-            Atributes[Idioma._nameCriticalDa]      [Idioma._infoNameBaseValue] = CriticalDamage;
-            Atributes[Idioma._nameMovSpeed]        [Idioma._infoNameBaseValue] = MovSpeed;
-            Atributes[Idioma._nameMagicP]          [Idioma._infoNameBaseValue] = MagicProficience;
-            Atributes[Idioma._nameMagicalAtt]      [Idioma._infoNameBaseValue] = MagicalAttk;
+            string BaseValue = Idioma._infoNameBaseValue;
+			Atributes[Idioma._nameLevel]           [BaseValue] = _level;
+			Atributes[Idioma._nameWeight]          [BaseValue] = Weight;
+			Atributes[Idioma._nameLife]            [BaseValue] = Life;
+            Atributes[Idioma._nameHistamine]       [BaseValue] = Histamine;
+            Atributes[Idioma._nameMana]            [BaseValue] = Mana;
+            Atributes[Idioma._nameInventor]        [BaseValue] = Inventor;
+            Atributes[Idioma._namePhisicalDe]      [BaseValue] = PhisicalDefense;
+            Atributes[Idioma._nameMagicalDe]       [BaseValue] = MagicalDefense;
+            Atributes[Idioma._nameAttSpeed]        [BaseValue] = AttSpeed;
+            Atributes[Idioma._nameStrenght]        [BaseValue] = Strenght;
+            Atributes[Idioma._nameCriticalChance]  [BaseValue] = CriticalChance;
+            Atributes[Idioma._nameCriticalDa]      [BaseValue] = CriticalDamage;
+            Atributes[Idioma._nameMovSpeed]        [BaseValue] = MovSpeed;
+            Atributes[Idioma._nameMagicP]          [BaseValue] = MagicProficience;
+            Atributes[Idioma._nameMagicalAtt]      [BaseValue] = MagicalAttk;
 
             // Set all bonus in value 1, so as not be empty...
             foreach (string atribute in Idioma._atributesName) Atributes[atribute][Idioma._InfoNameBonus] = 1;
@@ -93,8 +94,8 @@
                     (atribute != Idioma._namePhisicalDa) && (atribute != Idioma._nameMagicalDa)) ? 1 : 0;
 
             // Calculate others atributes...
-            PhisicalDamageMethod(Idioma._infoNameBaseValue, _debuff);
-            MagicalDamageMethod(Idioma._infoNameBaseValue, _debuff, _buff);
+            PhisicalDamageMethod(BaseValue, _debuff);
+            MagicalDamageMethod(BaseValue, _debuff, _buff);
             WeightMethod(1);
 
             // Update Atributes...
@@ -159,16 +160,18 @@
          * 
          */
 		{
+            string TotalValue = Idioma._InfoNameTotalValue;
+
 			foreach (string atrib in Idioma._atributesName) 
                 if (Atributes[atrib][Idioma._InfoNameForLevel] == 1)
-                    Atributes[atrib][Idioma._InfoNameTotalValue] = decimal.Round(
+                    Atributes[atrib][TotalValue] = decimal.Round(
                         Atributes[atrib][Idioma._infoNameBaseValue] * Atributes[atrib][Idioma._InfoNameBonus] * CalculateLevel(_bonusLevel), 2);
 
             // Calculate others atributes...
-            PhisicalDamageMethod(Idioma._InfoNameTotalValue, _debuff);
-            MagicalDamageMethod(Idioma._InfoNameTotalValue, _debuff, _buff);
-            PhisicalDefenseMethod(Idioma._InfoNameTotalValue, _buff);
-            MagicalDefenseMethod(Idioma._InfoNameTotalValue, _buff);
+            PhisicalDamageMethod (TotalValue, _debuff);
+            MagicalDamageMethod  (TotalValue, _debuff, _buff);
+            PhisicalDefenseMethod(TotalValue, _buff);
+            MagicalDefenseMethod (TotalValue, _buff);
         }
 
 
@@ -231,7 +234,7 @@
 			    Atributes[Idioma._nameLife][Idioma._InfoNameTotalValue] -= 
                     (Mobx.Atributes[Idioma._namePhisicalDa][Idioma._InfoNameTotalValue] - Atributes[Idioma._namePhisicalDe][Idioma._InfoNameTotalValue]);
 
-				//Mobx.Atributes[Idioma._nameHistamine][Idioma._InfoNameTotalValue] -= _histamineComption;
+				Mobx.Atributes[Idioma._nameHistamine][Idioma._InfoNameTotalValue] -= _histamineComption;
 			}
 
             if (Atributes[Idioma._nameMagicalDe][Idioma._InfoNameTotalValue] < Mobx.Atributes[Idioma._nameMagicalDa][Idioma._InfoNameTotalValue] &&
@@ -240,7 +243,7 @@
 				Atributes[Idioma._nameLife][Idioma._InfoNameTotalValue] -=
 					(Mobx.Atributes[Idioma._nameMagicalDa][Idioma._InfoNameTotalValue] - Atributes[Idioma._nameMagicalDe][Idioma._InfoNameTotalValue]);
 
-                //Mobx.Atributes[Idioma._nameMana][Idioma._InfoNameTotalValue] -= _histamineComption;
+                Mobx.Atributes[Idioma._nameMana][Idioma._InfoNameTotalValue] -= _histamineComption;
 			}
 
             if (Atributes[Idioma._nameLife][Idioma._InfoNameTotalValue] <= 0) GameWorld.EntitieIsDie(_id);
