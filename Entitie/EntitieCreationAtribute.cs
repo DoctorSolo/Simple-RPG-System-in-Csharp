@@ -21,7 +21,7 @@
 
 		#region Main Variables
 		public string _cretureName { get; } // Name of the creature
-        public decimal _id { get; } // ID of the creature
+        public int _id { get; } // ID of the creature
 
 		private int _level = 0; // Level of the creature
 
@@ -57,7 +57,7 @@
 
 
         // ADD ALL VALUE IN ATRIBUTES...
-        public EntitieCreationAtribute(decimal id, string Name, decimal Weight, decimal Life, decimal Histamine, decimal Mana, decimal Inventor,
+        public EntitieCreationAtribute(int id, string Name, decimal Weight, decimal Life, decimal Histamine, decimal Mana, decimal Inventor,
            decimal PhisicalDefense, decimal MagicalDefense, decimal AttSpeed, decimal Strenght, decimal CriticalChance, 
            decimal CriticalDamage, decimal MovSpeed, decimal MagicProficience, decimal MagicalAttk)
         {
@@ -231,7 +231,7 @@
 			    Atributes[Idioma._nameLife][Idioma._InfoNameTotalValue] -= 
                     (Mobx.Atributes[Idioma._namePhisicalDa][Idioma._InfoNameTotalValue] - Atributes[Idioma._namePhisicalDe][Idioma._InfoNameTotalValue]);
 
-				Mobx.Atributes[Idioma._nameHistamine][Idioma._InfoNameTotalValue] -= _histamineComption;
+				//Mobx.Atributes[Idioma._nameHistamine][Idioma._InfoNameTotalValue] -= _histamineComption;
 			}
 
             if (Atributes[Idioma._nameMagicalDe][Idioma._InfoNameTotalValue] < Mobx.Atributes[Idioma._nameMagicalDa][Idioma._InfoNameTotalValue] &&
@@ -240,7 +240,7 @@
 				Atributes[Idioma._nameLife][Idioma._InfoNameTotalValue] -=
 					(Mobx.Atributes[Idioma._nameMagicalDa][Idioma._InfoNameTotalValue] - Atributes[Idioma._nameMagicalDe][Idioma._InfoNameTotalValue]);
 
-                Mobx.Atributes[Idioma._nameMana][Idioma._InfoNameTotalValue] -= _histamineComption;
+                //Mobx.Atributes[Idioma._nameMana][Idioma._InfoNameTotalValue] -= _histamineComption;
 			}
 
             if (Atributes[Idioma._nameLife][Idioma._InfoNameTotalValue] <= 0) GameWorld.EntitieIsDie(_id);

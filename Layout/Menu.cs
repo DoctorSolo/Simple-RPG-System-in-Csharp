@@ -7,6 +7,8 @@
 	 * 
 	 */
 
+	using RPG_system.World;
+
 
 	internal static class Menu
 	{
@@ -22,6 +24,7 @@
 			while(true)
 			{
 				Layout.HomeMenu();
+				new GameWorld();
 			}
 		}
 

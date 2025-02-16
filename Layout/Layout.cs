@@ -16,6 +16,7 @@
 
 	internal static class Layout
 	{
+		private static string? _playerName;
 
 
 		public static void ChoiseYourPlayer()
@@ -57,9 +58,10 @@
 		 * 
 		 */
 		{
-			DisplayBox.Box(Idioma._indYourName, ConsoleColor.Green, ConsoleColor.Magenta, true, false);
+			DisplayBox.Box(Idioma._indYourName, ConsoleColor.DarkMagenta, ConsoleColor.Magenta, true, false);
 
-			DisplayBox.Box($"{Idioma._welcomeMessage}{DisplayBox.TextRead}", ConsoleColor.Green, ConsoleColor.Cyan);
+			_playerName = DisplayBox.TextRead;
+			DisplayBox.Box($"{Idioma._welcomeMessage}{_playerName}", ConsoleColor.Green, ConsoleColor.DarkGreen);
 			PressZtoContinue();
 		}
 
@@ -71,7 +73,7 @@
 		 */
 		{
 			DisplayBox.Box(Idioma._choiseYourRaceT, ConsoleColor.Green, ConsoleColor.Green, false, true, ConsoleColor.Black, "", Idioma._indChoiseRace);
-			GameWorld.Entities.Add(00, Race.ChoiseRace((byte)DisplayBox.ChoiseRead, 0, DisplayBox.TextRead, 60.00M));
+			GameWorld.Entities.Add(00, Race.ChoiseRace((byte)DisplayBox.ChoiseRead, 0, _playerName, 60.00M));
 			PressZtoContinue();
 		}
 
